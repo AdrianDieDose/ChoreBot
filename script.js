@@ -15,6 +15,9 @@ let openDoor3 = null;
 const startButton = document.getElementById('start');
 let currentlyPlaying = true;
 
+let currentStreak = 0;
+let bestStreak = 0;
+
 const isBot = (door) => {
   if(door.src === botDoorPath) {
     return true;
@@ -84,6 +87,12 @@ startButton.onclick = () => {
   }
 }
 
+const addStreak = () => {
+  document.getElementById('current-streak').innerHTML = currentStreak;
+  document.getElementById('best-streak').innerHTML = bestStreak;
+}
+
+
 const startRound = () => {
   doorImage1.src = closedDoorPath;
   doorImage2.src = closedDoorPath;
@@ -97,8 +106,14 @@ const startRound = () => {
 const gameOver = (status) => {
   if (status === 'win') {
     startButton.innerHTML = 'You win! Play again?';
+    currentStreak++
+    bestStreak = currentStreak;
+    addStreak()
   } else {
     startButton.innerHTML = 'Game over! Play again?';
+    currentStreak = bestStreak;
+    currentStreak = 0;
+    addStreak()
   }
   currentlyPlaying = false;
 };
